@@ -106,6 +106,19 @@ public:
     T c;
     T s;
 
+    inline GivensRotation()
+        : rowi(0)
+        , rowk(1)
+        , c(1)
+        , s(0)
+    {
+    }
+
+    inline void SetIK(int rowi_in, int rowk_in){
+      rowi=rowi_in;
+      rowk=rowk_in;
+    }
+
     inline GivensRotation(int rowi_in, int rowk_in)
         : rowi(rowi_in)
         , rowk(rowk_in)
@@ -197,6 +210,24 @@ public:
             A(rowi, j) = c * tau1 - s * tau2;
             A(rowk, j) = s * tau1 + c * tau2;
         }
+    }
+
+    template <class MatrixType>
+    inline void transposeRowRotation(MatrixType& A) const
+    {
+        for (int j = 0; j < A.cols(); j++) {
+            T tau1 = A(rowi, j);
+            T tau2 = A(rowk, j);
+            A(rowi, j) = c * tau1 + s * tau2;
+            A(rowk, j) = -s * tau1 + c * tau2;
+        }
+    }
+
+    inline void rowRotation(Eigen::Matrix<T,2,1>&A){
+        T tau1 = A(0);
+        T tau2 = A(1);
+        A(0) = c * tau1 - s * tau2;
+        A(1) = s * tau1 + c * tau2;
     }
 
     /**
