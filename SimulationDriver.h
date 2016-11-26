@@ -172,8 +172,8 @@ public:
   SimulationDriver<T>(parameters),N(parameters.N),a(parameters.a),dX(parameters.dX),
   rho(parameters.rho),k(parameters.k),x_n(parameters.N),x_np1(parameters.N),v_n(parameters.N),x_hat(parameters.N),residual(parameters.N),mass(parameters.N),delta(parameters.N),
   Newton_tol(parameters.Newton_tol),max_newton_it(parameters.max_newton_it),be_matrix(parameters.N){
-    //cons_model=new LinearElasticity<T>(k);
-    cons_model=new NeoHookean<T>(k);
+    cons_model=new LinearElasticity<T>(k);
+    //cons_model=new NeoHookean<T>(k);
     lf=new FEMHyperelasticity<T>(a,dX,N,*cons_model);
   }
 
@@ -186,7 +186,7 @@ public:
     //set intiial positions and velocity
     for(int i=0;i<N;i++){
       T x=(a+(T)i*dX);
-      x_n(i)=(T).7*x;
+      x_n(i)=(T)x;
       v_n(i)=(T)0;
     }
     //intialize mass lumped mass matrix from density
@@ -205,6 +205,7 @@ public:
     for(int it=1;it<max_newton_it;it++){
       residual=mass.asDiagonal()*(x_hat-x_np1);
       lf->AddForce(residual,x_np1,dt*dt);
+      residual(0)=0;
       T norm=(T)0;for(int i=0;i<N;i++) norm+=residual(i)*residual(i)/mass(i);
       norm=sqrt(norm);
       if(verbose)
@@ -217,6 +218,7 @@ public:
       lf->AddForceDerivative(be_matrix,x_np1,-dt*dt);
       be_matrix.QRSolve(delta,residual);
       x_np1+=delta;
+      x_np1(0)=(T)0;
     }
     Exit_BE();
   }
