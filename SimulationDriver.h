@@ -76,7 +76,7 @@ int frames_per_second,current_frame;
 std::string output_directory;
 
   SimulationDriver(const T final_time_input,const int frames_per_second_input,const T dt_input,std::string& output_dir):
-  final_time(final_time_input),frames_per_second(frames_per_second_input),dt(dt_input),dt_target(dt),
+  final_time(final_time_input),frames_per_second(frames_per_second_input),dt(dt_input),dt_target(dt),current_frame(0)
   dt_min((T)1e-6),output_directory(output_dir){
     dt_frame=(T)1/(T)frames_per_second;
     if(dt_target > dt_frame)
