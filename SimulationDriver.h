@@ -5,7 +5,7 @@
 #include <Eigen/Core>
 #include <fstream>
 #include "LagrangianForce.h"
-
+#include <math.h>
 namespace FILE_IO{
   inline void Write_Binary(std::string directory, std::string name,Eigen::VectorXd& v){
     std::string filename(directory+std::string("/")+name+std::string(".binary"));
@@ -70,7 +70,7 @@ inline void Write_DAT_File(std::string file,const Eigen::VectorXd& array){
         fprintf(fpointer,"v %f %f %f\n",array(0),1.0,1.0);
         fprintf(fpointer,"v %f %f %f\n",array(0),1.0,-1.0);
     for(int i=1;i<array.size();i++){
-        a=(array(i)-array(i-1))/temp;
+        a=0.25/sqrt((array(i)-array(i-1))/temp);
         fprintf(fpointer,"v %f %f %f\n",array(i),-a,-a);
         fprintf(fpointer,"v %f %f %f\n",array(i),-a,a);
         fprintf(fpointer,"v %f %f %f\n",array(i),a,a);
