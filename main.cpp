@@ -58,10 +58,12 @@ void ConvertBinaryToDat(){
     char str[12];
     sprintf(str, "%d", frame++);
     std::string frame_name(str);
-    std::string positions_string(std::string("particle_x_")+frame_name);
-    std::string velocities_string(std::string("particle_v_")+frame_name);
-    FILE_IO::Write_DAT_File(std::string(output_dat_dir+std::string("/")+positions_string+std::string(".dat")),x);
-    FILE_IO::Write_DAT_File(std::string(output_dat_dir+std::string("/")+velocities_string+std::string(".dat")),x);
+    std::string positions_string(std::string("file_")+frame_name);
+    //std::string positions_string(std::string("particle_x_")+frame_name);
+    //std::string velocities_string(std::string("particle_v_")+frame_name);
+    FILE_IO::Write_DAT_File(std::string(output_dat_dir+std::string("/")+positions_string+std::string(".obj")),x);
+    //FILE_IO::Write_DAT_File(std::string(output_dat_dir+std::string("/")+positions_string+std::string(".dat")),x);
+    //FILE_IO::Write_DAT_File(std::string(output_dat_dir+std::string("/")+velocities_string+std::string(".dat")),x);
   }
 }
 
