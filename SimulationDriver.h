@@ -42,8 +42,20 @@ namespace FILE_IO{
   inline void Write_DAT_File(std::string file,const Eigen::VectorXf& array){
     FILE* fpointer;
     fpointer=fopen(file.c_str(),"w");
-    for(int i=0;i<array.size();i++)
-        fprintf(fpointer,"%f\n",array(i));
+    for(int i=0;i<array.size();i++){
+        fprintf(fpointer,"v %f %f %f\n",array(i),-1.0,-1.0);
+        fprintf(fpointer,"v %f %f %f\n",array(i),-1.0,1.0);
+        fprintf(fpointer,"v %f %f %f\n",array(i),1.0,1.0);
+        fprintf(fpointer,"v %f %f %f\n",array(i),1.0,-1.0);
+        }
+    fprintf(fpointer,"f %d %d %d %d\n",1,2,4,5);    
+    for(int i=1;i<array.size();i++){
+        fprintf(fpointer,"f %d %d %d %d\n",4*i+1,4*i+2,4*i+3,4*i+4);
+        fprintf(fpointer,"f %d %d %d %d\n",4*i+1,4*i+2,4*(i-1)+2,4*(i-1)+1);
+        fprintf(fpointer,"f %d %d %d %d\n",4*i+2,4*i+3,4*(i-1)+3,4*(i-1)+2);
+        fprintf(fpointer,"f %d %d %d %d\n",4*i+3,4*i+4,4*(i-1)+4,4*(i-1)+3);
+        fprintf(fpointer,"f %d %d %d %d\n",4*i+4,4*i+1,4*(i-1)+1,4*(i-1)+4);
+        }  
     fclose(fpointer);
 }
 
