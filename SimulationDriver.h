@@ -62,7 +62,7 @@ namespace FILE_IO{
 inline void Write_DAT_File(std::string file,const Eigen::VectorXd& array){
     double N=20;
     double temp=1/(N-1);
-    double a==0.25/sqrt((array(1)-array(0))/temp);
+    double a=0.25/sqrt((array(1)-array(0))/temp);
     FILE* fpointer;
     fpointer=fopen(file.c_str(),"w");
         fprintf(fpointer,"v %f %f %f\n",array(0),-a,-a);
