@@ -60,13 +60,20 @@ namespace FILE_IO{
 }
 
 inline void Write_DAT_File(std::string file,const Eigen::VectorXd& array){
+    N=10;
+    temp=1/(N-1);
     FILE* fpointer;
     fpointer=fopen(file.c_str(),"w");
-    for(int i=0;i<array.size();i++){
-        fprintf(fpointer,"v %f %f %f\n",array(i),-1.0,-1.0);
-        fprintf(fpointer,"v %f %f %f\n",array(i),-1.0,1.0);
-        fprintf(fpointer,"v %f %f %f\n",array(i),1.0,1.0);
-        fprintf(fpointer,"v %f %f %f\n",array(i),1.0,-1.0);
+        fprintf(fpointer,"v %f %f %f\n",array(0),-1.0,-1.0);
+        fprintf(fpointer,"v %f %f %f\n",array(0),-1.0,1.0);
+        fprintf(fpointer,"v %f %f %f\n",array(0),1.0,1.0);
+        fprintf(fpointer,"v %f %f %f\n",array(0),1.0,-1.0);
+    for(int i=1;i<array.size();i++){
+        a=(array(i)-array(i-1))/temp;
+        fprintf(fpointer,"v %f %f %f\n",array(i),-a,-a);
+        fprintf(fpointer,"v %f %f %f\n",array(i),-a,a);
+        fprintf(fpointer,"v %f %f %f\n",array(i),a,a);
+        fprintf(fpointer,"v %f %f %f\n",array(i),a,-a);
         }
     fprintf(fpointer,"f %d %d %d %d\n",1,2,4,5);    
     for(int i=1;i<array.size();i++){
