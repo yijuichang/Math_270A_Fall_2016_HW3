@@ -95,7 +95,7 @@ public:
       force(e)+=scale*P;
       force(e+1)-=scale*P;
     }
-    force(N-1)+=scale*1;
+    force(N-1)+=scale*0.5;
   }
 
   void AddForceDerivative(SymmetricTridiagonal<T>& A,const TVect& x,T scale){
